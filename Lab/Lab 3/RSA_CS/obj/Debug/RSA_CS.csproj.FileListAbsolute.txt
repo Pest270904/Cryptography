@@ -1,0 +1,7 @@
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\bin\Debug\RSA_CS.exe.config
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\bin\Debug\RSA_CS.exe
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\bin\Debug\RSA_CS.pdb
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\obj\Debug\RSA_CS.csproj.AssemblyReference.cache
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\obj\Debug\RSA_CS.csproj.CoreCompileInputs.cache
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\obj\Debug\RSA_CS.exe
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_CS\obj\Debug\RSA_CS.pdb

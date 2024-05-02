@@ -1,0 +1,60 @@
+{ 
+
+"version": "2.0.0", 
+
+"tasks": [ 
+
+{ 
+
+"type": "shell", 
+"label": "C/C++: g++ build active file", 
+
+"command": "/usr/bin/clang++", 
+
+"args": [ 
+
+"-g2", 
+
+"-O3", 
+
+"-DNDEBUG", 
+
+"${file}", 
+
+"-o", 
+
+"${fileDirname}/${fileBasenameNoExtension}", 
+
+"-pthread", 
+
+"-I${workspaceFolder}/include", 
+
+"-L${workspaceFolder}/lib", 
+
+"-l:libcryptopp.a", 
+
+"-Wall", 
+
+], 
+
+"options": { 
+
+"cwd": "${workspaceFolder}" 
+
+}, 
+
+"problemMatcher": [ 
+
+"$clang++" 
+
+], 
+
+"group": "build", 
+
+"detail": "compiler: /usr/bin/clang++" 
+
+} 
+
+] 
+
+} 

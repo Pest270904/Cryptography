@@ -1,0 +1,10 @@
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\bin\Debug\RSA_GUI.exe.config
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\bin\Debug\RSA_GUI.exe
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\bin\Debug\RSA_GUI.pdb
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.csproj.AssemblyReference.cache
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.Form1.resources
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.Properties.Resources.resources
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.csproj.GenerateResource.cache
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.csproj.CoreCompileInputs.cache
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.exe
+D:\Mon hoc\HK4\MMH\TH\Lab3\RSA_GUI\obj\Debug\RSA_GUI.pdb

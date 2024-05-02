@@ -1,0 +1,145 @@
+1. Check your setups;
+2. Introduce Cryptopp;
+https://www.cryptopp.com/
+3. Input, output in cryptopp
+ in:
+	https://www.cryptopp.com/wiki/Source
+ out:
+	https://www.cryptopp.com/wiki/Sink
+ 3.1 String
+  in: StringSource;
+	https://www.cryptopp.com/wiki/StringSource
+  out: StringSink;
+	https://cryptopp.com/docs/ref/class_string_sink_template.html
+  Convert string:
+  wstring, Hex, Base 64,...
+  Vietname supports
+  
+ 3.2 Array
+ in: ArraySource (byte arrays)
+	https://www.cryptopp.com/wiki/ArraySource
+ out:  ArraySink (byte arrays)
+	https://www.cryptopp.com/wiki/ArraySink
+ 3.3 File
+  in: FileSource
+ 	https://www.cryptopp.com/wiki/FileSource
+  out: FileSink
+	https://www.cryptopp.com/wiki/FileSink
+
+4. Work with large numbers
+ - Integer class
+	https://www.cryptopp.com/wiki/Integer;
+ - ModularArithmetic
+	https://cryptopp.com/docs/ref/class_modular_arithmetic.html
+ - nbtheory class
+	nbtheory.h
+ - convert string <-> integer 
+
+5. DES, AES
+5.1 Mode of operation (block ciphers)
+https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
+ECB, CBC, OFB, CFB, CTR, XTS, CCM, GCM.
+- ECB
+- CBC
+- OFB
+- CFB 64, 128
+- CTR
+- XTS
+- CCM
+- GCM
+
+//random number generation
+#include "cryptopp/osrng.h"
+using CryptoPP::AutoSeededRandomPool;
+using CryptoPP::byte;
+
+//for som crypto algorithms
+#include "cryptopp/cryptlib.h"
+using CryptoPP::Exception;
+
+// block cipher
+#include "cryptopp/des.h"
+using CryptoPP::DES;
+
+#include "cryptopp/aes.h"
+using CryptoPP::AES;
+
+// mode of operation
+#include "cryptopp/modes.h" //ECB, CBC, CBC-CTS, CFB, OFB, CTR
+
+#include "cryptopp/xts.h" // XTS
+
+#include "cryptopp/gcm.h" // GCM
+
+#include "cryptopp/ccm.h" // GCM
+
+
+	#ifdef __linux__
+	setlocale(LC_ALL,"");
+	#elif __APPLE__
+    	#if TARGET_OS_MAC
+        setlocale(LC_ALL,"");
+		#else
+		#endif
+	#elif _WIN32
+	_setmode(_fileno(stdin), _O_U16TEXT);
+ 	_setmode(_fileno(stdout), _O_U16TEXT);
+	#else
+	#endif
+key, iv, nonce generation
+// random number generation 
+AutoSeededRandomPool prng;
+
+// key generation
+CryptoPP::byte fkey[32];
+prng.GenerateBlock(fkey, sizeof(fkey));
+
+// iv generation
+CryptoPP::byte iv[AES::BLOCKSIZE];
+prng.GenerateBlock(iv, sizeof(iv));
+
+// nonce generation ...
+
+// reading key from file
+	/* Reading key from file*/
+	FileSource fs("AES_key.key", false);
+	/*Create space  for key*/ 
+	CryptoPP::ArraySink copykey(key, sizeof(key));
+	/*Copy data from AES_key.key  to  key */ 
+	fs.Detach(new Redirector(copykey));
+	fs.Pump(sizeof(key));  // Pump first 32 bytes
+	
+// encryption using StreamTransformationFilter
+StreamTransformationFilter(ciph, cipher);
+ciph - function
+cipher output stream
+input using StringSource;
+
+note for using  StringSource
+
+StringSource(string, true,...
+StringSource(bytes, sizeof(bytes), true,...
+
+
+// encryption with cbc;
+note for task 1, task 2
+1. modes
+2. encryption or decryption
+3. inputs
+4. ouputs
+
+5.2 Code AES, DES with different mods
+5. Block cipher mode of operation
+https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
+
+- decrytion function (cbc)
+
+	// inputs
+	/* iv vector from file or screen */
+
+	/* key from file or screen */
+
+    /* input ciphertex from file or screen */
+    
+	//output 
+    /* output recover text on screen or save to file */

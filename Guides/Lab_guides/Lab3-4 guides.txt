@@ -1,0 +1,555 @@
+
+stringsink, stringsourse, byte
+
+bytes
+CryptoPP::SecureBlock
+    length: .size()
+CryptoPP::byte
+  length: sizeof ()
+ArraySink, ArraySource;
+string to byte
+StringSource - ArraySink
+
+	// string to byte
+	CryptoPP::byte key1[16];
+	wstring wskey;
+	string skey;
+	wcout<<"Please input key (16 bytes): ";
+	getline(wcin,wskey);
+	StringSource(wstring_to_string(wskey),true, 
+	new HexDecoder(
+		new CryptoPP::ArraySink(key1, sizeof(key1))));
+
+ RSA, ECC
+- Integer
+- RSA, DH
+
+Group of ECC
+  - Computations
+  - Ciphers,
+  - Digital signatures
+
+/* Integer arithmatics*/
+#include <cryptopp/integer.h>
+using CryptoPP::Integer;
+
+#include <cryptopp/nbtheory.h>
+using CryptoPP::ModularSquareRoot;
+
+#include <cryptopp/modarith.h>
+using CryptoPP::ModularArithmetic;;
+
+// compute mod p in Z_p
+ModularArithmetic ma(p); // mod p
+  cout << "x+y mod p: " << ma.Add(x, y) << endl;
+  cout << "x-y mod p: " << ma.Subtract(x, y) << endl;
+  cout << "x*y mod p: " << ma.Multiply(x, y) << endl;
+  cout << "x/y mod p: " << ma.Divide(x, y) << endl;
+  cout << "x%y mod p: " << ma.Reduce(x, y) << endl;
+  cout << "x^y mod p: " << ma.Exponentiate(x, y) << endl;
+  cout << "x1=x^-1 mod p: " <<ma.Divide(1, x) << endl;
+  Integer x1("1958569211444031162104289660421262539500678100766128832735.");
+  cout << "x*x1 mod p: " << ma.Multiply(x, x1) << endl;
+
+String to integer (support Vienamese)
+
+string to hex;
+hex to integer;
+// message to string 
+string ss="thuc hanh buoi 2";
+string hexss;
+StringSource (ss, true, new HexEncoder(new StringSink(hexss)));
+hexss=hexss+"H";
+cout << "string to hex:" << hexss << endl;
+Integer h(hexss.data()); // yes
+
+// integer to message
+
+
+// Conver integer to string and wstring;
+HEADER
+// integer to string, wstring
+#include <sstream>
+using std::ostringstream;
+
+FUNCTIONS
+wstring integer_to_wstring (const CryptoPP::Integer& t)
+{
+    std::ostringstream oss;
+    oss.str("");
+    oss.clear();
+    oss << t;
+    std::string encoded(oss.str());
+    std::wstring_convert<codecvt_utf8<wchar_t>> towstring;
+    return towstring.from_bytes(encoded);
+}
+
+string integer_to_string (const CryptoPP::Integer& t)
+{
+    std::ostringstream oss;
+    oss.str("");
+    oss.clear();
+    oss << t;
+    std::string encoded(oss.str());
+    return encoded;
+}
+
+
+DH/ Z_p
+KA=KB= g^uv=(g^u)^v = (g^v)^u
+// DH on Z_p;
+/*
+- prime number p;
+- generrator g;
+- Alice keys (u, U=g^u);
+- Bop keys   (v, V= g^v);
+- Exchange information:
+    Alice -> Bop: U;
+    Bob -> Alice:  V
+- Compute the key:
+  Alice: KA=V^u = g^uv
+  Bop:   KB=U^v = g^uv
+  Session key: K=KA=KB
+*/
+
+// Select random integer for secret keys
+AutoSeededRandomPool prng; // random geenerator
+Integer u(prng, 1, p);  
+Integer v(prng, 1, p);
+
+// Convert session key to AES secret keys for communication
+
+RSA
+-modul :n=p.q;
+-Secrete key: (n, d);secret exponen: d
+-Public key: (n, e); public exponent: e
+ d.e=1 mod phi(n); 
+encryption (m, n, e)
+c= m^e mod n, 
+decryption (c, n, d)
+
+Task
++) Read system parameters, n, p, q, d, e;
+Using switch case for 3 following moduls
++)  Keys:
+- Generate keys
+- Save key to file
+- Load key from file;
++) Encryption
+- Load key from file;
+- Input Message: from screen or from files
+- Ouput ciphertext: Save to file (or print to screen)
++) Decryption
+- Load key file;
+- Input cipher: from screen or from files
+- Ouput message: Save to file (or print to screen)
+
+/* RSA cipher*/
+#include "cryptopp/rsa.h"
+using CryptoPP::RSA;
+using CryptoPP::RSAES_OAEP_SHA_Encryptor;
+using CryptoPP::RSAES_OAEP_SHA_Decryptor;
+using CryptoPP::RSAES_PKCS1v15_Decryptor;
+using CryptoPP::RSAES_PKCS1v15_Encryptor;
+using CryptoPP::InvertibleRSAFunction;
+
+#include "cryptopp/filters.h"
+using CryptoPP::StringSink;
+using CryptoPP::StringSource;
+using CryptoPP::BufferedTransformation;
+using CryptoPP::PK_EncryptorFilter; // Public key encryption
+using CryptoPP::PK_DecryptorFilter; // Public key decryption
+
+
+//Genererate keys
+#include "cryptopp/cryptlib.h"
+using CryptoPP::PrivateKey;
+using CryptoPP::PublicKey;
+using CryptoPP::Exception;
+using CryptoPP::DecodingResult;
+
+/*Reading key input from file*/
+#include <cryptopp/queue.h>
+using CryptoPP::ByteQueue;
+
+/* convert string stream */
+#include <sstream>
+using std::ostringstream;
+
+
+// Functions
+
+string integer_to_hex(const CryptoPP::Integer& t)
+{
+    std::ostringstream oss;
+    oss.str("");
+    oss.clear();
+    oss << std::hex << t;
+    std::string encoded(oss.str());
+    return encoded;
+}
+
+// Save keys to Files 
+void Save(const string& filename, const BufferedTransformation& bt)
+{
+	FileSink file(filename.c_str());
+	bt.CopyTo(file);
+	file.MessageEnd();
+}
+
+void SavePublicKey(const string& filename, const PublicKey& key)
+{
+	ByteQueue queue;
+	key.Save(queue);
+	Save(filename, queue);
+}
+
+void SavePrivateKey(const string& filename, const PrivateKey& key)
+{
+	ByteQueue queue;
+	key.Save(queue);
+	Save(filename, queue);
+}
+
+// Load key from files 
+void Load(const string& filename, BufferedTransformation& bt)
+{
+	FileSource file(filename.c_str(), true /*pumpAll*/);
+
+	file.TransferTo(bt);
+	bt.MessageEnd();
+}
+
+void LoadPrivateKey(const string& filename, PrivateKey& key)
+{
+	ByteQueue queue;
+	Load(filename, queue);
+	key.Load(queue);	
+}
+
+void LoadPublicKey(const string& filename, PublicKey& key)
+{
+	ByteQueue queue;
+	Load(filename, queue);
+	key.Load(queue);	
+}
+
+        // Create a random private keys
+        AutoSeededRandomPool rng;
+        RSA::PrivateKey privateKey;
+        privateKey.GenerateRandomWithKeySize(rng, 3072);
+        // Creat the public key
+        RSA::PublicKey publicKey(privateKey);
+        // Write key to file
+        SavePrivateKey("rsa-private.key", privateKey);
+        SavePublicKey("rsa-public.key", publicKey);
+
+        /* Encryption c = m^e mod n, e is pub exponent;
+         input: plain; encrytion:e; output:cipher */
+        RSAES_OAEP_SHA_Encryptor e(publicKey);
+        StringSource(plain, true,
+            new PK_EncryptorFilter(rng, e,
+                new StringSink(cipher)
+            )); 
+        /* Decryption m = c^d mod n 
+        input: cipher; ouput: recovered; decryption:d(privateKey) */
+        RSAES_OAEP_SHA_Decryptor d(privateKey); // decryption with secret key d;
+        StringSource( cipher, true,
+            new PK_DecryptorFilter(rng, d,
+                new StringSink( recovered )
+            )); 
+
+
+// Get system parameters
+
+        Integer modul=privateKey.GetModulus(); // modul n
+        Integer prime1 = privateKey.GetPrime1(); // prime p
+        Integer prime2 = privateKey.GetPrime2();  // prime p
+
+        /* Secret exponent d; public exponent e */
+        Integer SK=privateKey.GetPrivateExponent(); // secret exponent d; 
+        Integer PK= publicKey.GetPublicExponent() // public exponent e; 
+
+
+        // Write key to file
+        SavePrivateKey("rsa-private.key", privateKey);
+        SavePublicKey("rsa-public.key", publicKey);
+        /*
+
+
+        // Load key from file
+        RSA::PrivateKey privateKey;
+        RSA::PublicKey publicKey;
+        LoadPrivateKey("private-key.pem", privateKey);
+        LoadPublicKey("public-key.pem", publicKey);
+
+
+// Encodekey in der form 
+void EncodePrivateKey(const string& filename, const RSA::PrivateKey& key)
+{
+	ByteQueue queue;
+	key.DEREncodePrivateKey(queue);
+	Encode(filename, queue);
+}
+
+void EncodePublicKey(const string& filename, const RSA::PublicKey& key)
+{
+	ByteQueue queue;
+	key.DEREncodePublicKey(queue);
+	Encode(filename, queue);
+}
+
+void Encode(const string& filename, const BufferedTransformation& bt)
+{
+	FileSink file(filename.c_str());
+	bt.CopyTo(file);
+	file.MessageEnd();
+}
+
+// Decode ber keys
+void DecodePrivateKey(const string& filename, RSA::PrivateKey& key)
+{
+	ByteQueue queue;
+	Decode(filename, queue);
+	key.BERDecodePrivateKey(queue, false /*optParams*/, queue.MaxRetrievable());
+}
+
+void DecodePublicKey(const string& filename, RSA::PublicKey& key)
+{
+	ByteQueue queue;
+	Decode(filename, queue);
+	key.BERDecodePublicKey(queue, false /*optParams*/, queue.MaxRetrievable());
+}
+
+void Decode(const string& filename, BufferedTransformation& bt)
+{
+	FileSource file(filename.c_str(), true /*pumpAll*/);
+	file.TransferTo(bt);
+	bt.MessageEnd();
+}
+        
+// ECC
+#include <cryptopp/ecp.h>
+#include <cryptopp/eccrypto.h>
+using CryptoPP::ECP;    // Prime field p
+using CryptoPP::ECPPoint; // points
+using CryptoPP::DL_GroupParameters_EC; // ECC group and sub group
+using CryptoPP::ECIES;
+using CryptoPP::DL_GroupPrecomputation;
+using CryptoPP::DL_FixedBasePrecomputation;
+
+/* standard curves*/
+#include <cryptopp/asn.h>
+#include <cryptopp/oids.h> // 
+namespace ASN1 = CryptoPP::ASN1;
+using CryptoPP::OID;
+  
+/* creat a curve equation*/
+// Input integer p, a, b
+  CryptoPP::ECP eqcurve256(p, a, b);
+
+ /* create an subgroup <G>*/
+ // input cureve equation, curve point G; integers n, h; 
+        CryptoPP::DL_GroupParameters_EC<ECP> curve256;
+        curve256.Initialize(eqcurve256,G,n,h);
+        
+        /* Curve parameters*/
+        cout << "Prime number p=" << eqcurve256.GetField().GetModulus() << endl;
+        cout << "Group order n=" << curve256.GetGroupOrder() << endl;
+        cout << "Cofactor h=" << curve256.GetCofactor() << endl;
+        cout << "Coefficient a=" << curve256.GetCurve().GetA() << endl;
+        cout << "Coefficient b=" << curve256.GetCurve().GetB() << endl;
+        ECP::Point G1=curve256.GetSubgroupGenerator();
+        cout << "Gx=" << G1.x <<endl;
+        cout << "Gy=" << G1.y <<endl;
+
+
+    /* Curve operations*/
+
+        /* Compute on subgroup <G> */
+        ECP::Point  Q=curve256.GetCurve().Double(G); // G+G
+        cout << "Qx=" << Q.x << endl;
+        cout << "Qy=" << Q.y << endl;
+        // Scalar Multiply
+        CryptoPP::Integer k("871.");
+        ECP::Point U=curve256.GetCurve().Multiply(k,G); // k.G 
+        cout << "Ux=" << U.x << endl;
+        cout << "Uy=" << U.y << endl;
+        // Point Addition
+        ECP::Point V=curve256.GetCurve().Add(Q,U); // Q+U
+        cout << "Vx=" << U.x << endl;
+        cout << "Vy=" << U.y << endl;
+         // Point invertion
+        ECP::Point X=curve256.GetCurve().Inverse(G); // -G
+        cout << "Xx=" << X.x << endl;
+        cout << "Xy=" << X.y << endl;
+        // Multiple
+        ECP::Point H=curve256.GetCurve().ScalarMultiply(G,k); // k.G 
+        cout << "Hx=" << H.x << endl;
+        cout << "Hy=" << H.y << endl;
+
+  /* Compute on ECC curve  y^2 = x^3 +ax +b*/
+        ECP::Point I=eqcurve256.Add(G,H);
+        cout << "Hx=" << I.x << endl;
+        cout << "Hy=" << I.y << endl;
+
+
++) Elliptic-curve Diffie–Hellman
+	Setup cure: name, base points, ....
+       /* 
+       User A: private key d1;
+        AutoSeededRandomPool rng; // random geenerator
+        Integer d(rng, 1, n);  
+        public key Q1=d1.G;
+          
+       User B: private key d2; public key Q1=d2.G;
+       A ---> B: Q1= (Q1.x, Q1.y)
+       B----> A: Q1= (Q2.x, Q2.y)
+       Compute the session key:
+       //A: create cure point Q2=(Q2.x, Q2.y)
+       Integer Q2.x =
+       Integer Q2.y =
+       ECP::Point Q2(Q2.x, Q2.y);
+       
+       QSS= d1(Q2)
+       B: create cure point Q1=(Q1.x, Q1.y)
+       QSS= d1(Q2)
+       */
+
+
+// standard curves
+/* standard curves*/
+#include <cryptopp/asn.h>
+#include <cryptopp/oids.h> // curve names
+namespace ASN1 = CryptoPP::ASN1;
+using CryptoPP::OID;
+
+// Contruct standrad curve from OID
+    /* ECC standard curves */
+    CryptoPP::OID ecc521= ASN1::secp521r1();
+    /* Create a curve for ECDH*/ 
+        CryptoPP::DL_GroupParameters_EC<ECP> curve521;
+        curve521.Initialize(ecc521);
+    /* Get Curve parameters p, a,b, G, n, h*/
+
+        CryptoPP::Integer p=curve521.GetCurve().GetField().GetModulus();
+
+        // Short-term keys
+        CryptoPP::Integer k_secret(rng, 1, n);
+        ECP::Point Q_pub=curve521.GetCurve().ScalarMultiply(G,k_secret);
+        cout << "short-term secret k = " << k_secret << endl;
+        cout << "short term pyblic Q_pub.x=" << Q_pub.x << endl;
+        cout << "short term pyblic Q_pub.y=" << Q_pub.x << endl;
+
+
+/* ECDSA */
+
+- Keys (pk, sk); curve parameters
+- s= Signer(sk, m);
+- Verify (s, pk, m);
+
+// Hash funtions
+#include "cryptopp/sha.h"
+using CryptoPP::SHA512;
+using CryptoPP::SHA256;
+
+// String filter
+#include "cryptopp/filters.h"
+using CryptoPP::StringSource;
+using CryptoPP::StringSink;
+using CryptoPP::ArraySink;
+using CryptoPP::SignerFilter;
+using CryptoPP::SignatureVerificationFilter;
+using CryptoPP::byte;
+
+// ECC crypto
+#include "cryptopp/eccrypto.h"
+using CryptoPP::ECDSA;
+using CryptoPP::ECP;
+using CryptoPP::DL_GroupParameters_EC;
+
+// Vietnamese support
+
+
++) Keys
+   /* Creat system parameter, keys, and save to files */
+    // Private and Public keys
+    ECDSA<ECP, SHA256>::PrivateKey privateKey;
+    ECDSA<ECP, SHA256>::PublicKey publicKey;
+// Long-term key: (d, Q=dG)
+    /* Generate private key d, using standard curve */
+    GeneratePrivateKey(CryptoPP::ASN1::secp256r1(), privateKey);
+
+- using  swich case to select: generate key, signing, verifing; 
+
+- Keys (pk, sk); curve parameters
+  +)Generate keys
+  +) Save to file (der, ber, pem,...);
+
+- Signing
+  +) Load key from file
+  +) Message m: load from file or input from screen;
+  +) Signature s: load from file or input from screen;
+
+/* load message to sign */
+    string message;
+    FileSource("message.txt", true, new StringSink(message));
+    wcout << "Input message from file  message.txt:)" << endl;
+    wcout << string_to_wstring(message)<< endl;
+
+     Siging message
+     - shor-term key (k, k.G);
+    0 < k < n; kG = (x1, y1), r=x1;
+    - compute (r,s)  
+    s= 𝑘^-1(𝐻(𝑚)+ d.𝑟) mod 𝑛;
+    output (r, s);
+     */
+    signature.erase();    
+    StringSource( message, true,
+        new SignerFilter(prng,
+            ECDSA<ECP,SHA256>::Signer(privateKeys),
+            new Base64Encoder(new StringSink(signature))
+        )
+    );
+
+
+        bool result;
+    result=false;
+    // Public key variable
+    ECDSA<ECP, SHA256>::PublicKey publicKey_r;
+    // Load public key
+    LoadPublicKey("ec.public.der", publicKey_r);
+    // Message m, sinnature (r,s);
+    string message_r, signature_r;
+    FileSource("message1.txt", true, new StringSink(message_r));
+    // Hex decode signature
+    StringSource ss(signature, true,
+    new HexDecoder(
+        new StringSink(signature_r)
+        ) // HexDecoder
+    ); //
+
+
+Key formats: pem, ASN.1/der,
+- Check .der formar
+openssl asn1parse -in ec.public.der -inform der -item X509_PUBKEY
+openssl asn1parse -in ec.private.der -inform der
+
+
+openssl ecparam -name secp256k1 -genkey -noout -out secp256k1-key.pem
+/* signature formar ASN.1/DER, P1363 and OpenPGP formats.
+using Functions
+DSAConvertSignatureFormat, 
+
+
+/* hash functions */
+    CryptoPP::SHA3_512 hash;
+    hash.Restart();
+    hash.Update((const byte*)ws2s(message).data(), ws2s(message).size()); // input message
+    digest.resize(hash.DigestSize()); // set ouput
+    hash.TruncatedFinal((byte*)&digest[0], digest.size()); // compute ouput digest
+
+
+
+
+

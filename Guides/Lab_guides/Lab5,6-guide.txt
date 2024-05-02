@@ -1,0 +1,79 @@
+Hash and HMAC
+1. Build Hash Funtions (using CryptoPP library)
+ +) Hash to string h:{0,1}^* --> {0,1}^l
+ +) Hash to finite field  h:{0,1}^* --> Z_P
+ +) Hash to ECC (xem links) h:{0,1}^* --> Z_P --> Curve E(F_p);
+
+https://datatracker.ietf.org/doc/draft-irtf-cfrg-hash-to-curve/
+
+// Header for hash funtions
+#include "cryptopp/sha.h" // sha-1, sha-2
+#include "cryptopp/sha3.h" // sha3
+#include "cryptopp/shake.h" // shake
+
+// Hash algorithms information
+    std::wcout << "Name: " << s2ws(hash.AlgorithmName()) << std::endl;
+    std::wcout << "Digest size: " << hash.DigestSize() << std::endl;
+    std::wcout << "Block size: " << hash.BlockSize() << std::endl;
+
+ // Compute disgest
+  std::string digest;
+  hash.Restart(); 
+  hash.Update((const byte*)ws2s(message).data(), ws2s(message).size()); // setup input
+  digest.resize(hash.DigestSize()); // set ouput length
+  hash.TruncatedFinal((byte*)&digest[0], digest.size()); // compute ouput
+
+// convert digest into hex format
+    std::string encode;
+    encode.clear();
+    StringSource(digest, true, 
+    new HexEncoder (new StringSink (encode)));
+    std::wcout << "Digest string: " << s2ws(encode) << std::endl;
+
+// Convert output to integer (hash to finite field)
+    string hdigest=encode+"H";
+    CryptoPP::Integer idigest(hdigest.data());
+    CryptoPP::Integer p("AADD9DB8DBE9C48B3FD4E6AE33C9FC07CB308DB3B3C9D20ED6639CCA703308717D4D9B009BC66842AECDA12AE6A380E62881FF2F2D82C68528AA6056583A48F3H");
+    wcout << "Prime number p for Z_p: "<< in2ws(p) << endl;
+    wcout << "Hash digest in Z_p: " << in2ws(idigest % p) << endl; // idigest mod p
+    return 0;
+    note: length(digest) >= lenth(p)
+
+2. x509 certificate
+https://certificatedecoder.dev/
+https://www.cryptopp.com/wiki/X509Certificate
+
+3. Attacks on Hash and HMAC
+  +) Collision Attack (MD5)
+  https://seedsecuritylabs.org/Labs_20.04/Crypto/Crypto_MD5_Collision/
+  (Task 1; task 2, task 3;)
+  Compiler Hasclash
+  +) Clone hashclash from this link 
+  https://github.com/cr-marcstevens/hashclash
+  +) Install pre-requisite
+   * autoconf & automake & libtool
+    sudo apt-get install autoconf automake libtool
+   *zlib & bzip2 libraries
+    sudo apt-get install zlib1g-dev libbz2-dev
+
+ +) Download bost 1.57 and copy file to hashclash foder
+ https://drive.google.com/uc?id=1AhUCOIXtZzjPfzQAvcBzAjODpQJ5T7sR
+
+  - Run terminal in hashclash folder and then run the flowing command to compile the library
+   ./install_boost.sh
+   ./build.sh
+Note: if you would like to compile with bost 1.77 please edit version bost 1.56 in build.sh and install_boost.sh to version 1.77
+"BOOST_VERSION:=1.57.0" --->> BOOST_VERSION:=1.77.0
+Task 1:
+../scripts/poc_no.sh <prefix file name>
+
+Task 3:
+../scripts/cpc.sh <prefix file name 1> <prefix file name 2>
+
+Hex editor (binary file)
+sudo apt-get install bless
+
+  +) Hash Length Extension Attack
+  https://seedsecuritylabs.org/Labs_20.04/Crypto/Crypto_Hash_Length_Ext/
+  https://github.com/bwall/HashPump
+  https://github.com/openssl/openssl
