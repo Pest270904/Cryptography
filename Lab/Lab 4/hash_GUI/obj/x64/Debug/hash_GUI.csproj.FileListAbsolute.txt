@@ -1,0 +1,10 @@
+C:\Users\ACER\Downloads\hash_GUI\bin\x64\Debug\hash_GUI.exe.config
+C:\Users\ACER\Downloads\hash_GUI\bin\x64\Debug\hash_GUI.exe
+C:\Users\ACER\Downloads\hash_GUI\bin\x64\Debug\hash_GUI.pdb
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.csproj.AssemblyReference.cache
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.Form1.resources
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.Properties.Resources.resources
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.csproj.GenerateResource.cache
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.csproj.CoreCompileInputs.cache
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.exe
+C:\Users\ACER\Downloads\hash_GUI\obj\x64\Debug\hash_GUI.pdb

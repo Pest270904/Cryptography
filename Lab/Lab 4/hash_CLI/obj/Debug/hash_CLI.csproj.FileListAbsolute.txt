@@ -1,0 +1,7 @@
+C:\Users\ACER\Downloads\hash_CLI\bin\Debug\hash_CLI.exe.config
+C:\Users\ACER\Downloads\hash_CLI\bin\Debug\hash_CLI.exe
+C:\Users\ACER\Downloads\hash_CLI\bin\Debug\hash_CLI.pdb
+C:\Users\ACER\Downloads\hash_CLI\obj\Debug\hash_CLI.csproj.AssemblyReference.cache
+C:\Users\ACER\Downloads\hash_CLI\obj\Debug\hash_CLI.csproj.CoreCompileInputs.cache
+C:\Users\ACER\Downloads\hash_CLI\obj\Debug\hash_CLI.exe
+C:\Users\ACER\Downloads\hash_CLI\obj\Debug\hash_CLI.pdb

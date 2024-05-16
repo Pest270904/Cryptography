@@ -1,0 +1,111 @@
+// { 
+// "version": "2.0.0", 
+// "tasks": [ 
+//     { 
+//         "type": "shell",    
+//         "label": "C/C++: g++ build active file", 
+//         "command": "/usr/bin/gcc", 
+//         "args": [ 
+//         "-g2", 
+//         "-O3", 
+//         "-DNDEBUG", 
+//         "${file}", 
+//         "-o", 
+//         "${fileDirname}/${fileBasenameNoExtension}", 
+//         "-pthread", 
+//         "-I${workspaceFolder}/include", 
+//         "-L${workspaceFolder}/lib", 
+//         "-l:libcryptopp.a", 
+//         "-l:libcrypto.a",
+//         "-l:libssl.a",
+//         "-Wall", 
+//         ], 
+//         "options": { 
+//             "cwd": "${workspaceFolder}" 
+//         }, 
+//         "problemMatcher": [ 
+//             "$gcc" 
+//         ], 
+//         "group": "build", 
+//         "detail": "compiler: /usr/bin/g++" 
+//         } 
+//     ]   
+// } 
+
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: gcc.exe build active file",
+            "command": "C:\\msys64\\mingw64\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g2",
+                "-O3",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.dll",
+                "-lpthread", 
+                "-L${workspaceFolder}/lib", //duong dan den thu muc chua thu vien
+                "-l:libcrypto.a", //khai bao ta dung file nao // cach khac -lcryptopp (mac dinh compile bang dynamic) (.a:static; .so:dynamic)
+                "-I${workspaceFolder}/include", //noi de header
+                "-lcrypt32", // wwin API crypt32.lib
+                "-lws2_32", // wwin api Ws2_32.lib
+                "-shared",
+                "-DBUILD_DLL",
+                "-fvisibility=hidden",
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: C:\\msys64\\mingw64\\bin\\gcc.exe"
+        }
+    ]
+}
+
+// {
+//     "version": "2.0.0",
+//     "tasks": [
+//         {
+//             "type": "shell",
+//             "label": "C/C++: cl.exe build active file",
+//             "command": "cl.exe",
+//             "args": [
+//                 "/MT",  // Link to static libraries
+//                 "/GS",  // Enable security checks
+//                 "/O2",  // Optimize code for maximum speed
+//                 "/W4",  // Set warning level to 4
+//                 "/Zi",  // Generate complete debugging information
+//                 "/nologo",  // Suppress startup banner
+//                 "/EHsc",  // Enable C++ exception handling
+//                 "/DBUILD_DLL",  // Define BUILD_DLL macro
+//                 "/I${workspaceFolder}\\include",  // Include directory
+//                 "${file}",  // Input source file
+//                 "/link",
+//                 "/DLL",  // Generate DLL
+//                 "/OUT:${fileDirname}\\${fileBasenameNoExtension}.dll",  // Output file name
+//                 "/LIBPATH:${workspaceFolder}\\lib",  // Library path
+//                 "libcrypto.lib",  // Link with libcrypto.lib
+//                 "crypt32.lib",  // Link with crypt32.lib
+//                 "ws2_32.lib",  // Link with ws2_32.lib
+//                 "/MACHINE:X64"  // Target a 64-bit machine
+//             ],
+//             "options": {
+//                 "cwd": "${fileDirname}"
+//             },
+//             "problemMatcher": [
+//                 "$msCompile"
+//             ],
+//             "group": {
+//                 "kind": "build",
+//                 "isDefault": true
+//             },
+//             "detail": "compiler: cl.exe"
+//         }
+//     ]
+// }
