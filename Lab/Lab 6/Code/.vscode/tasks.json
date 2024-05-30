@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: g++.exe build active file",
+            "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g2",
+                "-O3",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-lpthread", 
+                "-L${workspaceFolder}/lib/openssl",
+                "-l:libcrypto.a",
+                "-L${workspaceFolder}/lib/cryptopp",
+                "-l:libcryptopp.a",
+                "-I${workspaceFolder}/include",
+                "-lcrypt32", // win API crypt32.lib
+                "-lws2_32", // win api Ws2_32.lib
+                //"-shared", // for .so only
+                //"-DBUILD_DLL", // for define macro
+                "-fvisibility=hidden",
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: C:\\msys64\\mingw64\\bin\\g++.exe"
+        }
+    ]
+}
