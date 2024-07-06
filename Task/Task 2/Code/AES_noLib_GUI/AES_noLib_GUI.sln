@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AES_noLib_GUI", "AES_noLib_GUI.csproj", "{8896E085-BD01-4771-A087-5B060499CA7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Debug|x64.ActiveCfg = Debug|x64
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Debug|x64.Build.0 = Debug|x64
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Release|x64.ActiveCfg = Release|x64
+		{8896E085-BD01-4771-A087-5B060499CA7A}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEA8D2D8-185D-414F-9260-153F41BB7D61}
+	EndGlobalSection
+EndGlobal

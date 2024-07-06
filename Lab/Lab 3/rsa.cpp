@@ -432,3 +432,4 @@ void LoadBase64(const string &filename, BufferedTransformation &bt)
 {
 	throw runtime_error("Not implemented");
 }
+

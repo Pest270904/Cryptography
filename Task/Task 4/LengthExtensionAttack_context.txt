@@ -1,0 +1,14 @@
+k = 12345678abcdefgh
+m = nguyen tuan phat
+padding = 22521076
+
+H(k||m)
+	SHA1:337f1aa8adfee487c2f4f922a2b73198ac5f7d4c
+	SHA256:baa3e34421b26c1f4f24af3b2bd8f07b32df9e73865ef03151436d261f0884ae
+	SHA512:2db7e81ea17be4e67ced6a7c183ed57736ee558bde79b60c1ba0f048c4086af2c2ed3a7eabe41362c09051d839a1dc327aab3156949624c548f94aada37aae77
+
+hashpump -s 337f1aa8adfee487c2f4f922a2b73198ac5f7d4c -d 'nguyen tuan phat' -a 22521076 -k 16
+
+hashpump -s baa3e34421b26c1f4f24af3b2bd8f07b32df9e73865ef03151436d261f0884ae -d 'nguyen tuan phat' -a 22521076 -k 16
+
+hashpump -s 2db7e81ea17be4e67ced6a7c183ed57736ee558bde79b60c1ba0f048c4086af2c2ed3a7eabe41362c09051d839a1dc327aab3156949624c548f94aada37aae77 -d 'nguyen tuan phat' -a 22521076 -k 16
